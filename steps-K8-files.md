@@ -8,7 +8,7 @@ kubectl create namespace webapps
 #### Creating Service Account (vi sa.yml)
 apiVersion: v1
 kind: ServiceAccount
-metadate:
+metadata:
   name: jenkins
   namespace: webapps
 
@@ -19,7 +19,7 @@ kubectl apply -f sa.yml
 ####  Creating Role for SA (vi role.yml)
 apiVersion: rbac.authorization.k8.io/v1
 kind: Role
-metadate:
+metadata:
   name: app-role
   namespace: webapps
 rules:
@@ -62,7 +62,7 @@ kubectl apply -f role.yml
 #### Bind the role to the Service Account (vi assign.yml)
 apiVersion: rbac.authorization.k8.io/v1
 kind: RoleBinding
-metadate:
+metadata:
   name: app-rolebinding
   namespace: webapps
 roleRef:
@@ -82,7 +82,7 @@ kubectl apply -f assign.yml
 apiVersion: v1
 kind: Secret
 type: kubernetes.io/secret-account-token
-metadate:
+metadata:
   name: mysecret
   annotations:
     kubernetes.io/secret-account-token = jenkins
