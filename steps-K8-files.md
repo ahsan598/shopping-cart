@@ -1,22 +1,22 @@
 # Create Service Account, Role & assign that Role to Service Account and create a Secret for that Service Account & generate a Token.
 
 
-# First create namespace in K8s cluster
+#### First create namespace in K8s cluster
 kubectl create namespace webapps
 
 
-# Creating Service Account (vi sa.yml)
+#### Creating Service Account (vi sa.yml)
 apiVersion: v1
 kind: ServiceAccount
 metadate:
   name: jenkins
   namespace: webapps
 
-# Applying the command to create the Service Account
+#### Applying the command to create the Service Account
 kubectl apply -f sa.yml
 
 
-#  Creating Role for SA (vi role.yml)
+####  Creating Role for SA (vi role.yml)
 apiVersion: rbac.authorization.k8.io/v1
 kind: Role
 metadate:
@@ -55,11 +55,11 @@ rules:
       - services
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
-# Applying the command to create the role
+#### Applying the command to create the role
 kubectl apply -f role.yml
 
 
-# Bind the role to the Service Account (vi assign.yml)
+#### Bind the role to the Service Account (vi assign.yml)
 apiVersion: rbac.authorization.k8.io/v1
 kind: RoleBinding
 metadate:
@@ -74,7 +74,7 @@ subjects:
   kind: ServiceAccount
   name: jenkins
 
-# Applying the command to assign the role to SA
+#### Applying the command to assign the role to SA
 kubectl apply -f assign.yml
 
 
@@ -87,12 +87,12 @@ metadate:
   annotations:
     kubernetes.io/secret-account-token = jenkins
 
-# Applying the command to assign the secret to SA
+#### Applying the command to assign the secret to SA
 kubectl apply -f secret.yml -n webapps
 
-# To view the token inside a namespace
+#### To view the token inside a namespace
 kubectl -n webapps describe secret mysecret
 
 
-# .kube/config file to get K8s cluster info
+#### .kube/config file to get K8s cluster info
 cd ~/.kube
